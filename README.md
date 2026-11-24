@@ -1,5 +1,9 @@
 # Leo: Multi-Agent AI Tutor
 
+## Demo video
+
+A 3 to 5 minute recording of one full session: [Watch the demo on Google Drive](https://drive.google.com/drive/folders/1AQRncsJtm_NTCSqqkaCWV9tyQaYDQfiH?usp=sharing)
+
 Leo is a study assistant made of four agents built with CrewAI. The student picks a topic, and the agents plan, teach, quiz and give feedback, handing work to each other along the way. Leo has a Streamlit web interface and a terminal interface. Both show which agent is working and every handoff between agents.
 
 Model: Claude Haiku 5.5 (`anthropic/claude-haiku-5-5`) through CrewAI's Anthropic provider.
@@ -129,7 +133,3 @@ leo/schemas.py        Pydantic models and JSON guardrails
 leo/memory.py         long term and session memory
 leo/ui.py             terminal display helpers
 ```
-
-## Demo video
-
-A 3 to 5 minute recording of one full session: [Watch the demo on Google Drive](https://drive.google.com/drive/folders/1AQRncsJtm_NTCSqqkaCWV9tyQaYDQfiH?usp=sharing)
