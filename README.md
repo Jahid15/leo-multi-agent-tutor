@@ -1,6 +1,6 @@
 # Leo: Multi-Agent AI Tutor
 
-Leo is a study assistant made of four agents built with CrewAI. The student picks a topic, and the agents plan, teach, quiz and give feedback, handing work to each other along the way. Leo runs in the terminal and shows which agent is working and every handoff between agents.
+Leo is a study assistant made of four agents built with CrewAI. The student picks a topic, and the agents plan, teach, quiz and give feedback, handing work to each other along the way. Leo has a Streamlit web interface and a terminal interface. Both show which agent is working and every handoff between agents.
 
 Model: Claude Haiku 5.5 (`anthropic/claude-haiku-5-5`) through CrewAI's Anthropic provider.
 
@@ -72,6 +72,21 @@ The Coordinator, Quiz Master and Evaluator return JSON that is checked against P
 
 The student can step in at three points: change the study plan before teaching starts, ask the Explainer questions or ask for a simpler or harder lesson before the quiz, and accept or skip the re-teaching round.
 
+## Interface
+
+Streamlit (`app.py`):
+
+- A pipeline bar at the top (Student, Coordinator, Explainer, Quiz Master, Evaluator) lights up the agent that is working.
+- A chat feed where every message carries a coloured badge for its agent, with a handoff line between agents (for example `Explainer → Quiz Master · handoff: lesson text + concepts to test`).
+- Buttons for the human-in-the-loop steps: Start the lesson, Quiz me, Simpler, Harder, Re-teach me, Skip and finish.
+- The quiz as a form, with radio buttons for multiple choice and text boxes for short answers.
+- The Evaluator's results as a table with a score.
+- A sidebar with the live shared memory and a numbered handoff log.
+
+Terminal (`main.py`): the same session with coloured panels per agent and the handoffs printed as lines.
+
+Both interfaces use the same engine ([leo/engine.py](leo/engine.py)), so the agents and the Coordinator's logic are identical.
+
 ## How to run
 
 Requires Python 3.10 to 3.13.
@@ -84,10 +99,11 @@ python -m venv .venv
 source .venv/bin/activate     # macOS / Linux
 pip install -r requirements.txt
 cp .env.example .env          # then put your Anthropic API key in .env
-python main.py
+streamlit run app.py          # web interface, opens in the browser
+python main.py                # or the terminal interface
 ```
 
-Add `--verbose` to see CrewAI's internal agent logs.
+Add `--verbose` to `python main.py` to see CrewAI's internal agent logs.
 
 Settings in `.env`:
 
@@ -102,14 +118,16 @@ Settings in `.env`:
 ## Project layout
 
 ```
-main.py               entry point
+app.py                Streamlit web interface
+main.py               terminal entry point
 leo/config.py         settings and the LLM
 leo/prompts.py        role definitions and prompt templates
 leo/agents.py         builds the four CrewAI agents
-leo/orchestrator.py   the Coordinator's session flow, handoffs, feedback loop, error handling
+leo/engine.py         the Coordinator's logic: crews, handoffs, feedback loop decision, timeouts and fallbacks
+leo/orchestrator.py   terminal session flow
 leo/schemas.py        Pydantic models and JSON guardrails
 leo/memory.py         long term and session memory
-leo/ui.py             terminal interface
+leo/ui.py             terminal display helpers
 ```
 
 ## Demo video
