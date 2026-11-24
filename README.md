@@ -132,4 +132,4 @@ leo/ui.py             terminal display helpers
 
 ## Demo video
 
-A 3 to 5 minute recording of one full session: [add link here]
+A 3 to 5 minute recording of one full session: [Watch the demo on Google Drive](https://drive.google.com/drive/folders/1AQRncsJtm_NTCSqqkaCWV9tyQaYDQfiH?usp=sharing)
